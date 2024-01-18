@@ -2,12 +2,10 @@ package com.changejar.kiranaregister;
 
 import com.changejar.entity.User;
 import com.changejar.entity.KiranaStore;
-import com.changejar.entity.Transaction;
-import com.changejar.enums.CurrencyType;
+import com.changejar.entity.UserAction;
 import com.changejar.enums.StoreStatus;
-import com.changejar.enums.TransactionType;
 import com.changejar.repository.KiranaStoreRepository;
-import com.changejar.repository.TransactionRepository;
+import com.changejar.repository.UserActionRepository;
 import com.changejar.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,14 +15,15 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @EntityScan("com.changejar.entity")
 @EnableAutoConfiguration
 @EnableJpaRepositories("com.changejar.repository")
 @ComponentScan("com.changejar.*")
+@EnableWebMvc
 @SpringBootApplication
 public class KiranaRegisterApplication {
 
@@ -86,54 +85,44 @@ public class KiranaRegisterApplication {
 	}
 
 	@Bean
-	CommandLineRunner initTransactionRepository(TransactionRepository transactionRepository) {
+	CommandLineRunner initTransactionRepository(UserActionRepository userActionRepository) {
 		return args -> {
-			transactionRepository.saveAll(List.of(
-					new Transaction(
+			userActionRepository.saveAll(List.of(
+					new UserAction(
 							null,
 							1L,
 							3L,
-							LocalDateTime.now().minusHours(8),
-							TransactionType.CREDIT,
-							CurrencyType.INR,
 							1100.0D,
-							1100.0D),
-					new Transaction(
+							System.currentTimeMillis(),
+							System.currentTimeMillis()),
+					new UserAction(
 							null,
 							1L,
 							4L,
-							LocalDateTime.now().minusHours(5),
-							TransactionType.CREDIT,
-							CurrencyType.INR,
 							785.75D,
-							250.0D),
-					new Transaction(
+							System.currentTimeMillis(),
+							System.currentTimeMillis()),
+					new UserAction(
 							null,
 							1L,
 							5L,
-							LocalDateTime.now(),
-							TransactionType.CREDIT,
-							CurrencyType.INR,
 							550.0D,
-							300.0D),
-					new Transaction(
+							System.currentTimeMillis(),
+							System.currentTimeMillis()),
+					new UserAction(
 							null,
 							2L,
 							3L,
-							LocalDateTime.now().minusHours(7),
-							TransactionType.CREDIT,
-							CurrencyType.INR,
 							1000.0D,
-							500.0D),
-					new Transaction(
+							System.currentTimeMillis(),
+							System.currentTimeMillis()),
+					new UserAction(
 							null,
 							2L,
 							5L,
-							LocalDateTime.now().minusHours(1),
-							TransactionType.CREDIT,
-							CurrencyType.INR,
 							300.0D,
-							300.0D)));
+							System.currentTimeMillis(),
+							System.currentTimeMillis())));
 		};
 	}
 }

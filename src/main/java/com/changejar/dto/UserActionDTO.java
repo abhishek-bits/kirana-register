@@ -1,22 +1,25 @@
 package com.changejar.dto;
 
-import com.changejar.enums.CurrencyType;
-import com.changejar.enums.TransactionType;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserActionDTO {
-    private Long userId;
-    private String userName;
-    private Long userPhone;
+public class UserActionDTO implements Serializable {
+    private Long customerId;
+    private String customerName;
+    private Long customerPhone;
+    private Long kiranaStoreId;
+    private Long kiranaStorePincode;
     private Double amountPending;
-    private Double amountPaid;
-    private CurrencyType currencyType;
-    private TransactionType transactionType;
+    private String createdAt;
+    private String lastUpdatedAt;
 }

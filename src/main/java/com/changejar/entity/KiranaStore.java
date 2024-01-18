@@ -10,10 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@Data
 @Entity
 @Table(name="kirana_store")
 @NoArgsConstructor
@@ -24,7 +26,10 @@ public class KiranaStore implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long ownerId;
+    /**
+     * Here, userId is the id of the owner of this kirana store.
+     */
+    private Long userId;
 
     private String city;
     private String state;

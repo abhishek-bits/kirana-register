@@ -1,7 +1,9 @@
 package com.changejar.service;
 
 import com.changejar.dto.TransactionDTO;
+import com.changejar.dto.TransactionRequestDTO;
 import com.changejar.dto.UserActionDTO;
+import com.changejar.entity.Transaction;
 import com.changejar.enums.CurrencyType;
 import com.changejar.enums.TransactionType;
 import jakarta.annotation.Nullable;
@@ -11,19 +13,7 @@ import java.util.Collection;
 
 public interface TransactionService {
 
-    void save(TransactionDTO transactionDTO);
+    Transaction save(TransactionDTO transactionDTO);
 
-    Collection<TransactionDTO> getTransactionsByDateRangeAndCurrencyTypeAndKiranaStoreIdAndUserId(
-            LocalDateTime fromDateTime,
-            @Nullable LocalDateTime toDateTime,
-            CurrencyType currencyType,
-            Long kiranaStoreId,
-            Long userId);
-
-    Collection<UserActionDTO> getUserActionsByDateRangeAndCurrencyTypeAndKiranaStoreIdAndTransactionType(
-            LocalDateTime fromDateTime,
-            @Nullable LocalDateTime toDateTime,
-            CurrencyType currencyType,
-            Long kiranaStoreId,
-            @Nullable TransactionType transactionType);
+    Collection<TransactionDTO> getTransactions(TransactionRequestDTO transactionRequestDTO);
 }

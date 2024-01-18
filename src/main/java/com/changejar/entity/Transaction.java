@@ -1,6 +1,5 @@
 package com.changejar.entity;
 
-import com.changejar.enums.CurrencyType;
 import com.changejar.enums.TransactionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,12 +10,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "transaction")
 @NoArgsConstructor
@@ -31,19 +31,14 @@ public class Transaction implements Serializable {
     private Long kiranaStoreId;
 
     @Column(updatable = false)
-    private Long customerId;
+    private Long userId;
 
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     @Enumerated(EnumType.STRING)
     @Column(updatable = false)
     private TransactionType transactionType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(updatable = false)
-    private CurrencyType currencyType;
-
-    private Double amountPending;
-    private Double amountPaid;
+    private Double amount;
 }

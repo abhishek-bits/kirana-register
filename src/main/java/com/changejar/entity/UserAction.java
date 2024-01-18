@@ -10,23 +10,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "user_action")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class UserAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(updatable = false)
+    private Long kiranaStoreId;
 
-    @Column(unique = true)
-    private String email;
+    @Column(updatable = false)
+    private Long userId;
 
-    @Column(unique = true)
-    private Long phone;
+    private Double amountPending;
+
+    private Long createdAt;
+    private Long lastUpdatedAt;
 }
