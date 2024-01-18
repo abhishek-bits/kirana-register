@@ -2,7 +2,6 @@ package com.changejar.entity;
 
 import com.changejar.enums.StoreStatus;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,14 +22,14 @@ public class KiranaStore implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Long ownerId;
+    private Long ownerId;
 
-    String city;
-    String state;
-    Integer pincode;
+    private String city;
+    private String state;
+    private Integer pincode;
 
     @Enumerated(EnumType.STRING)
-    StoreStatus storeStatus;
+    private StoreStatus storeStatus;
 }

@@ -18,13 +18,13 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String name;
-
-    @Column(unique = true)
-    String email;
+    private String name;
 
     @Column(unique = true)
-    Long phone;
+    private String email;
+
+    @Column(unique = true)
+    private Long phone;
 }
