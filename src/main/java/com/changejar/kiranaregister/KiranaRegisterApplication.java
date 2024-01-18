@@ -2,10 +2,10 @@ package com.changejar.kiranaregister;
 
 import com.changejar.entity.User;
 import com.changejar.entity.KiranaStore;
-import com.changejar.entity.UserAction;
+import com.changejar.entity.CustomerAccount;
 import com.changejar.enums.StoreStatus;
 import com.changejar.repository.KiranaStoreRepository;
-import com.changejar.repository.UserActionRepository;
+import com.changejar.repository.CustomerAccountRepository;
 import com.changejar.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -85,38 +85,38 @@ public class KiranaRegisterApplication {
 	}
 
 	@Bean
-	CommandLineRunner initTransactionRepository(UserActionRepository userActionRepository) {
+	CommandLineRunner initTransactionRepository(CustomerAccountRepository customerAccountRepository) {
 		return args -> {
-			userActionRepository.saveAll(List.of(
-					new UserAction(
+			customerAccountRepository.saveAll(List.of(
+					new CustomerAccount(
 							null,
 							1L,
 							3L,
 							1100.0D,
 							System.currentTimeMillis(),
 							System.currentTimeMillis()),
-					new UserAction(
+					new CustomerAccount(
 							null,
 							1L,
 							4L,
 							785.75D,
 							System.currentTimeMillis(),
 							System.currentTimeMillis()),
-					new UserAction(
+					new CustomerAccount(
 							null,
 							1L,
 							5L,
 							550.0D,
 							System.currentTimeMillis(),
 							System.currentTimeMillis()),
-					new UserAction(
+					new CustomerAccount(
 							null,
 							2L,
 							3L,
 							1000.0D,
 							System.currentTimeMillis(),
 							System.currentTimeMillis()),
-					new UserAction(
+					new CustomerAccount(
 							null,
 							2L,
 							5L,

@@ -1,5 +1,6 @@
 package com.changejar.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -13,12 +14,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserActionDTO implements Serializable {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class CustomerAccountDTO implements Serializable {
     private Long customerId;
-    private String customerName;
-    private Long customerPhone;
     private Long kiranaStoreId;
-    private Long kiranaStorePincode;
     private Double amountPending;
     private String createdAt;
     private String lastUpdatedAt;

@@ -1,10 +1,9 @@
 package com.changejar.controller;
 
-import com.changejar.dto.TransactionDTO;
 import com.changejar.dto.BaseRequestDTO;
+import com.changejar.dto.CustomerAccountDTO;
 import com.changejar.entity.Response;
-import com.changejar.exception.ResourceNotFoundException;
-import com.changejar.service.TransactionService;
+import com.changejar.service.CustomerAccountService;
 import com.changejar.util.LocalDateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,35 +17,31 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/txn")
-public class TransactionController {
+@RequestMapping("/api/v1/account")
+public class CustomerAccountController {
 
     @Autowired
-    private TransactionService transactionService;
+    private CustomerAccountService customerAccountService;
 
     @PostMapping("/save")
-    ResponseEntity<Response> saveTransaction(@RequestBody TransactionDTO transactionDTO)
-            throws IllegalArgumentException, ResourceNotFoundException {
-
+    ResponseEntity<Response> customerOnboard(@RequestBody CustomerAccountDTO customerAccountDTO) {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTimeUtils.getLocalDateTime(System.currentTimeMillis()).toString())
-                        .data(Map.of("transaction", transactionService.save(transactionDTO)))
-                        .message("Transaction recorded successfully.")
+                        .data(Map.of("userAccount", customerAccountService.save(customerAccountDTO)))
+                        .message("User Account created successfully.")
                         .status(HttpStatus.CREATED)
                         .statusCode(HttpStatus.CREATED.value())
                         .build());
     }
 
     @PostMapping
-    ResponseEntity<Response> getAllTransactions(@RequestBody BaseRequestDTO baseRequestDTO) {
+    ResponseEntity<Response> getAllCustomerAccounts(@RequestBody BaseRequestDTO baseRequestDTO) {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTimeUtils.getLocalDateTime(System.currentTimeMillis()).toString())
-                        .data(Map.of(
-                                "transactions",
-                                transactionService.getTransactions(baseRequestDTO)))
-                        .message("Transactions retrieved successfully.")
+                        .data(Map.of("userAccounts", customerAccountService.getUserAccounts(baseRequestDTO)))
+                        .message("User Accounts retrieved successfully.")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
                         .build());

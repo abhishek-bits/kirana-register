@@ -1,18 +1,16 @@
 package com.changejar.service.impl;
 
-import com.changejar.constant.TransactionConstants;
+import com.changejar.constant.TimeConstants;
 import com.changejar.dto.TransactionDTO;
-import com.changejar.dto.TransactionRequestDTO;
+import com.changejar.dto.BaseRequestDTO;
 import com.changejar.dto.external.CurrencyDTO;
 import com.changejar.entity.Transaction;
-import com.changejar.entity.UserAction;
+import com.changejar.entity.CustomerAccount;
 import com.changejar.enums.TransactionType;
 import com.changejar.repository.TransactionRepository;
 import com.changejar.service.CurrencyService;
-import com.changejar.service.KiranaStoreService;
 import com.changejar.service.TransactionService;
-import com.changejar.service.UserActionService;
-import com.changejar.service.UserService;
+import com.changejar.service.CustomerAccountService;
 import com.changejar.util.LocalDateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +23,7 @@ import java.util.stream.Collectors;
 public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserActionService userActionService;
-
-    @Autowired
-    private KiranaStoreService kiranaStoreService;
+    private CustomerAccountService customerAccountService;
 
     @Autowired
     private CurrencyService currencyService;
@@ -46,11 +38,11 @@ public class TransactionServiceImpl implements TransactionService {
             return null;
         }
 
-        Optional<UserAction> userActionOptional = userActionService.getByKiranaStoreIdAndUserId(
+        Optional<CustomerAccount> userAccountOptional = customerAccountService.getByKiranaStoreIdAndUserId(
                 transactionDTO.getKiranaStoreId(),
                 transactionDTO.getCustomerId());
 
-        if(userActionOptional.isEmpty()) {
+        if(userAccountOptional.isEmpty()) {
             throw new IllegalStateException("Invalid request.");
         }
 
@@ -68,83 +60,82 @@ public class TransactionServiceImpl implements TransactionService {
                 )
         );
 
-        UserAction userAction = userActionOptional.get();
+        CustomerAccount customerAccount = userAccountOptional.get();
 
         if(transactionDTO.getTransactionType().equals(TransactionType.CREDIT)) {
-            userAction.setAmountPending(userAction.getAmountPending() - transaction.getAmount());
+            customerAccount.setAmountPending(customerAccount.getAmountPending() - transaction.getAmount());
         } else {
-            userAction.setAmountPending(userAction.getAmountPending() + transaction.getAmount());
+            customerAccount.setAmountPending(customerAccount.getAmountPending() + transaction.getAmount());
         }
 
-        userActionService.save(userAction);
+        customerAccountService.save(customerAccount);
 
         return transaction;
     }
 
     @Override
-    public Collection<TransactionDTO> getTransactions(TransactionRequestDTO transactionRequestDTO) {
+    public Collection<TransactionDTO> getTransactions(BaseRequestDTO baseRequestDTO) {
 
         Collection<Transaction> transactions;
 
-        // Assuming fromDateTime is not null
-        if(transactionRequestDTO.getToMillis() == null) {
-            if(transactionRequestDTO.getKiranaStoreId() == null) {
-                if(transactionRequestDTO.getUserId() == null) {
+        // Assuming fromMillis is not null.
+        if(baseRequestDTO.getToMillis() == null) {
+            if(baseRequestDTO.getKiranaStoreId() == null) {
+                if(baseRequestDTO.getUserId() == null) {
                     transactions = transactionRepository.findByCreatedAtBetween(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getFromMillis() + TransactionConstants.TRANSACTION_FETCH_DEFAULT_OFFSET_HOURS_MILLISECONDS
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getFromMillis() + TimeConstants.DEFAULT_OFFSET_HOURS_MILLISECONDS
                     );
                 } else {
                     transactions = transactionRepository.findByCreatedAtBetweenAndUserId(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getFromMillis() + TransactionConstants.TRANSACTION_FETCH_DEFAULT_OFFSET_HOURS_MILLISECONDS,
-                            transactionRequestDTO.getUserId()
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getFromMillis() + TimeConstants.DEFAULT_OFFSET_HOURS_MILLISECONDS,
+                            baseRequestDTO.getUserId()
                     );
                 }
             } else {
-                if(transactionRequestDTO.getUserId() == null) {
+                if(baseRequestDTO.getUserId() == null) {
                     transactions = transactionRepository.findByCreatedAtBetweenAndKiranaStoreId(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getFromMillis() + TransactionConstants.TRANSACTION_FETCH_DEFAULT_OFFSET_HOURS_MILLISECONDS,
-                            transactionRequestDTO.getKiranaStoreId()
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getFromMillis() + TimeConstants.DEFAULT_OFFSET_HOURS_MILLISECONDS,
+                            baseRequestDTO.getKiranaStoreId()
                     );
                 } else {
                     transactions = transactionRepository.findByCreatedAtBetweenAndKiranaStoreIdAndUserId(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getFromMillis() + TransactionConstants.TRANSACTION_FETCH_DEFAULT_OFFSET_HOURS_MILLISECONDS,
-                            transactionRequestDTO.getKiranaStoreId(),
-                            transactionRequestDTO.getUserId()
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getFromMillis() + TimeConstants.DEFAULT_OFFSET_HOURS_MILLISECONDS,
+                            baseRequestDTO.getKiranaStoreId(),
+                            baseRequestDTO.getUserId()
                     );
                 }
             }
         } else {
-            if(transactionRequestDTO.getKiranaStoreId() == null) {
-                if(transactionRequestDTO.getUserId() == null) {
+            if(baseRequestDTO.getKiranaStoreId() == null) {
+                if(baseRequestDTO.getUserId() == null) {
                     transactions = transactionRepository.findByCreatedAtBetween(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getToMillis()
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getToMillis()
                     );
                 } else {
                     transactions = transactionRepository.findByCreatedAtBetweenAndUserId(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getToMillis(),
-                            transactionRequestDTO.getUserId()
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getToMillis(),
+                            baseRequestDTO.getUserId()
                     );
                 }
             } else {
-                if(transactionRequestDTO.getUserId() == null) {
-                    System.out.println("Groing correct");
+                if(baseRequestDTO.getUserId() == null) {
                     transactions = transactionRepository.findByCreatedAtBetweenAndKiranaStoreId(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getToMillis(),
-                            transactionRequestDTO.getKiranaStoreId()
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getToMillis(),
+                            baseRequestDTO.getKiranaStoreId()
                     );
                 } else {
                     transactions = transactionRepository.findByCreatedAtBetweenAndKiranaStoreIdAndUserId(
-                            transactionRequestDTO.getFromMillis(),
-                            transactionRequestDTO.getToMillis(),
-                            transactionRequestDTO.getKiranaStoreId(),
-                            transactionRequestDTO.getUserId()
+                            baseRequestDTO.getFromMillis(),
+                            baseRequestDTO.getToMillis(),
+                            baseRequestDTO.getKiranaStoreId(),
+                            baseRequestDTO.getUserId()
                     );
                 }
             }
@@ -159,9 +150,9 @@ public class TransactionServiceImpl implements TransactionService {
                         transaction.getUserId(),
                         LocalDateTimeUtils.getLocalDateTime(transaction.getCreatedAt()).toString(),
                         transaction.getTransactionType(),
-                        transactionRequestDTO.getCurrencyType(),
+                        baseRequestDTO.getCurrencyType(),
                         transaction.getAmount() * currencyDTO.getRates().get(
-                                transactionRequestDTO.getCurrencyType().toString()))
-                ).collect(Collectors.toList());
+                                baseRequestDTO.getCurrencyType().toString())))
+                .collect(Collectors.toList());
     }
 }

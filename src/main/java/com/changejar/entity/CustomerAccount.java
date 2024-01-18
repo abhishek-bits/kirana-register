@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_action")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAction {
+public class CustomerAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

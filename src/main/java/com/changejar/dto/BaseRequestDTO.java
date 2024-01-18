@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Getter
 @ToString
-public class TransactionRequestDTO implements Serializable {
+public class BaseRequestDTO implements Serializable {
     Long fromMillis;
     @Nullable
     Long toMillis;
