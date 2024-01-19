@@ -6,6 +6,11 @@ import com.changejar.service.CurrencyService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Implementation of contracts specified in CurrencyService interface.
+ *
+ * @author Abhishek Sharma
+ */
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
     @Override

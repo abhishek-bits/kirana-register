@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Implementation of contracts enlisted in the UserService Interface.
+ *
+ * @author Abhishek Sharma
+ */
 @Service
 public class UserServiceImpl implements UserService {
 

@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Implementation of contracts enlisted in KiranaStoreService interface.
+ *
+ * @author Abhishek Sharma
+ */
 @Service
 public class KiranaStoreServiceImpl implements KiranaStoreService {
 

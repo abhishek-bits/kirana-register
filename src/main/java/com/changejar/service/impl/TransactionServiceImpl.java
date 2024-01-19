@@ -21,6 +21,11 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of contracts enlisted in TransactionService interface.
+ *
+ * @author Abhishek Sharma
+ */
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
@@ -66,8 +71,12 @@ public class TransactionServiceImpl implements TransactionService {
         CustomerAccount customerAccount = userAccountOptional.get();
 
         if(transaction.getTransactionType().equals(TransactionType.CREDIT)) {
+            // If it is a CREDIT type transaction, then it means that
+            // the customer has done repayment of his/her pending amount.
             customerAccount.setAmountPending(customerAccount.getAmountPending() - transaction.getAmount());
         } else {
+            // If it is a DEBIT type transaction, then it means that
+            // the customer has bought goods for which he/she will pay later.
             customerAccount.setAmountPending(customerAccount.getAmountPending() + transaction.getAmount());
         }
 
@@ -81,7 +90,10 @@ public class TransactionServiceImpl implements TransactionService {
 
         Collection<Transaction> transactions;
 
-        // Assuming fromMillis is not null.
+        if(baseRequestDTO.getFromMillis() == null) {
+            throw new IllegalArgumentException("Invalid Request: fromMillis is a required field.");
+        }
+
         if(baseRequestDTO.getToMillis() == null) {
             if(baseRequestDTO.getKiranaStoreId() == null) {
                 if(baseRequestDTO.getUserId() == null) {

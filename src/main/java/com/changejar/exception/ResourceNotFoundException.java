@@ -2,6 +2,11 @@ package com.changejar.exception;
 
 import com.changejar.enums.ResourceType;
 
+/**
+ * This exception helps us to terminate the instance on invalid requests.
+ *
+ * @author Abhishek Sharma
+ */
 public class ResourceNotFoundException extends RuntimeException {
 
     private ResourceType resourceType;

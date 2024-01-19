@@ -25,9 +25,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping("/save")
-    ResponseEntity<Response> saveTransaction(@RequestBody TransactionDTO transactionDTO)
-            throws IllegalArgumentException, ResourceNotFoundException {
-
+    ResponseEntity<Response> saveTransaction(@RequestBody TransactionDTO transactionDTO) {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTimeUtils.getLocalDateTime(System.currentTimeMillis()).toString())

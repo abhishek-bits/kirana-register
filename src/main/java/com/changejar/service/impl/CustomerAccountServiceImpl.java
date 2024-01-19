@@ -21,6 +21,11 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of contracts enlisted in CustomerAccountService interface.
+ *
+ * @author Abhishek Sharma.
+ */
 @Service
 public class CustomerAccountServiceImpl implements CustomerAccountService {
 

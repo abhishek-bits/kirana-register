@@ -12,6 +12,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * This entity is used to represent a User.
+ *
+ * @author Abhishek Sharma
+ */
 @Data
 @Entity
 @Table(name = "user")
@@ -22,11 +27,20 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * This field signifies the name of this user.
+     */
     private String name;
 
+    /**
+     * This field signifies the email of this user.
+     */
     @Column(unique = true)
     private String email;
 
+    /**
+     * This field signifies the phone number of this user.
+     */
     @Column(unique = true)
     private Long phone;
 }
