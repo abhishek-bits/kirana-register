@@ -62,7 +62,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         CustomerAccount customerAccount = userAccountOptional.get();
 
-        if(transactionDTO.getTransactionType().equals(TransactionType.CREDIT)) {
+        if(transaction.getTransactionType().equals(TransactionType.CREDIT)) {
             customerAccount.setAmountPending(customerAccount.getAmountPending() - transaction.getAmount());
         } else {
             customerAccount.setAmountPending(customerAccount.getAmountPending() + transaction.getAmount());
