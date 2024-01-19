@@ -7,17 +7,13 @@ import com.changejar.entity.Transaction;
 import com.changejar.enums.CurrencyType;
 import com.changejar.enums.TransactionType;
 import com.changejar.kiranaregister.KiranaRegisterApplication;
-import com.changejar.repository.CustomerAccountRepository;
 import com.changejar.repository.TransactionRepository;
 import com.changejar.service.impl.TransactionServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
