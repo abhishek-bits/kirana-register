@@ -14,6 +14,8 @@ import com.changejar.service.CustomerAccountService;
 import com.changejar.util.LocalDateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -32,6 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = RuntimeException.class)
     public Transaction save(TransactionDTO transactionDTO) {
 
         if(transactionDTO == null) {

@@ -3,7 +3,6 @@ package com.changejar.service.impl;
 import com.changejar.constant.TimeConstants;
 import com.changejar.dto.BaseRequestDTO;
 import com.changejar.dto.CustomerAccountDTO;
-import com.changejar.dto.TransactionDTO;
 import com.changejar.dto.external.CurrencyDTO;
 import com.changejar.entity.CustomerAccount;
 import com.changejar.enums.ResourceType;
@@ -16,6 +15,7 @@ import com.changejar.service.UserService;
 import com.changejar.util.LocalDateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -37,6 +37,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     private CurrencyService currencyService;
 
     @Override
+    @Transactional(rollbackFor = RuntimeException.class)
     public CustomerAccount save(CustomerAccountDTO customerAccountDTO) {
 
         handleInvalidRequest(customerAccountDTO);
@@ -52,6 +53,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     }
 
     @Override
+    @Transactional(rollbackFor = RuntimeException.class)
     public CustomerAccount save(CustomerAccount customerAccount) {
         if(customerAccount.getId() != null) {
             customerAccount.setLastUpdatedAt(System.currentTimeMillis());
