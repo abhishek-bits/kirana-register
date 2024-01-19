@@ -27,8 +27,8 @@ public class CustomerAccountController {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTimeUtils.getLocalDateTime(System.currentTimeMillis()).toString())
-                        .data(Map.of("userAccount", customerAccountService.save(customerAccountDTO)))
-                        .message("User Account created successfully.")
+                        .data(Map.of("customerAccount", customerAccountService.save(customerAccountDTO)))
+                        .message("Customer Account created successfully.")
                         .status(HttpStatus.CREATED)
                         .statusCode(HttpStatus.CREATED.value())
                         .build());
@@ -39,8 +39,8 @@ public class CustomerAccountController {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTimeUtils.getLocalDateTime(System.currentTimeMillis()).toString())
-                        .data(Map.of("userAccounts", customerAccountService.getUserAccounts(baseRequestDTO)))
-                        .message("User Accounts retrieved successfully.")
+                        .data(Map.of("customerAccounts", customerAccountService.getUserAccounts(baseRequestDTO)))
+                        .message("Customer Accounts retrieved successfully.")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
                         .build());

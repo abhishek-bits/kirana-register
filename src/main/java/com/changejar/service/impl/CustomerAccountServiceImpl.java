@@ -41,6 +41,9 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     @Autowired
     private CurrencyService currencyService;
 
+    /*
+     * Eliminating Partial DB writes using @Transactional annotation by rollback in case of any RuntimeException.
+     */
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public CustomerAccount save(CustomerAccountDTO customerAccountDTO) {
@@ -57,6 +60,9 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
         ));
     }
 
+    /*
+     * Eliminating Partial DB writes using @Transactional annotation by rollback in case of any RuntimeException.
+     */
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public CustomerAccount save(CustomerAccount customerAccount) {

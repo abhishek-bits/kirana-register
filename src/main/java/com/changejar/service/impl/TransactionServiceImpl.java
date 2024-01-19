@@ -38,6 +38,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    /*
+     * Eliminating RACE CONDITION and Partial DB writes using @Transactional annotation
+     * - by applying a stricter form of isolation.
+     * - by supporting rollback in case of any RuntimeException.
+     */
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = RuntimeException.class)
     public Transaction save(TransactionDTO transactionDTO) {
